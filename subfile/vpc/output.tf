@@ -3,17 +3,17 @@ output "vpc_id" {
 }
 
 output "pub-sub-01-id" {
-  value = aws_subnet.my_subnet[0].id
+  value = aws_subnet.pub_subnet[0].id
 }
 
 output "pri-dev-sub-01-id" {
-  value = aws_subnet.my_subnet[1].id
+  value = aws_subnet.pri_subnet[0].id
 }
 
 output "pri-dev-sub-02-id" {
-  value = aws_subnet.my_subnet[2].id
+  value = aws_subnet.pri_subnet[1].id
 }
 
-output "pri-db-sub-02-id" {
-  value = aws_subnet.my_subnet[3].id
+output "pri-db-sub-01-id" {
+  value = aws_subnet.pri_subnet[2].id
 }
