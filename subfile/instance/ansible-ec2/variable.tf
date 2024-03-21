@@ -14,7 +14,7 @@ variable "subnets_id" {
 }
 
 variable "pri_sub_sg" {
-  type = set(string)
+  type = list(string)
 }
 
 # variable "subnet_id" {

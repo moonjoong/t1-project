@@ -1,7 +1,7 @@
-# variable "num" {
-#   type    = number
-#   default = 1
-# }
+variable "num" {
+  type    = number
+  default = 2
+}
 
 variable "image_id" {
   type    = string
@@ -14,11 +14,11 @@ variable "instance_type" {
 }
 
 
-variable "subnets_id" {
-  type = list(string)
+variable "subnet_id" {
+  type = string
 
 }
 
 variable "pub_sub_sg" {
-  type = set(string)
+  type = list(string)
 }

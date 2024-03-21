@@ -16,10 +16,6 @@ resource "aws_route_table" "route_table" {
     gateway_id     = count.index == 0 ? aws_internet_gateway.igw.id : null
     nat_gateway_id = count.index == 1 ? aws_nat_gateway.nat_gateway_1.id : null
   }
-  # route {
-  #   cidr_block     = "0.0.0.0/0"
-  #   nat_gateway_id = count.index == 1 ? aws_nat_gateway.nat_gateway_1.id : null
-  # }
 }
 
 
