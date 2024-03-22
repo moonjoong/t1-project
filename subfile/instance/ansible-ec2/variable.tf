@@ -20,6 +20,9 @@ variable "node_ec2_sg" {
   type = any
 }
 
+variable "keyname" {
+  type = string
+}
 # variable "subnet_id" {
 #   type = string
 

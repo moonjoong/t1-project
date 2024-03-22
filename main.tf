@@ -40,17 +40,21 @@ module "att" {
 }
 
 module "sg" {
-  source             = "./subfile/sg"
-  vpc_id             = module.vpc.vpc_id
-  local_cidr_block   = "61.85.118.29/32"
-  pri_sub_cidr_block = module.vpc.pri_ec2_sub_id[*]
+  source           = "./subfile/sg"
+  vpc_id           = module.vpc.vpc_id
+  local_cidr_block = "61.85.118.29/32"
+  pri_subnets_id   = module.vpc.pri_ec2_sub_id[*]
 
 }
 
 module "bastion-ec2" {
-  source     = "./subfile/instance/ec2"
-  subnet_id  = module.vpc.pub_sub_id[0]
-  pub_sub_sg = module.sg.bastion_sg_id[*]
+  source         = "./subfile/instance/ec2"
+  pub_subnet_id  = module.vpc.pub_sub_id[0]
+  bastion_ec2_sg = module.sg.bastion_sg_id[*]
+  pri_subnets_id = module.vpc.pri_ec2_sub_id[*]
+  keyname        = "moonkey"
+  image_id       = "ami-02b668243e1aba105"
+  instance_type  = "t3.micro"
 
 }
 
@@ -59,5 +63,8 @@ module "pri-ansible-server" {
   pri_subnets_id = module.vpc.pri_ec2_sub_id[*]
   ansible_ec2_sg = module.sg.ansible_sg_id[*]
   node_ec2_sg    = module.sg.node_sg_id
+  keyname        = "moonkey"
+  image_id       = "ami-02b668243e1aba105"
+  instance_type  = "t3.micro"
 }
 

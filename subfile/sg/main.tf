@@ -1,5 +1,5 @@
 resource "aws_security_group" "bastion_sg" {
-  count  = length(var.pri_sub_cidr_block)
+  count  = length(var.pri_subnets_id)
   vpc_id = var.vpc_id
   name   = "bastion-security-group-${count.index + 1}"
 
@@ -22,7 +22,7 @@ resource "aws_security_group" "bastion_sg" {
 
 
 resource "aws_security_group" "ansible_sg" {
-  count  = length(var.pri_sub_cidr_block)
+  count  = length(var.pri_subnets_id)
   vpc_id = var.vpc_id
   name   = "ansible-security-group-${count.index + 1}"
 
@@ -47,17 +47,29 @@ resource "aws_security_group" "ansible_sg" {
 
 
 resource "aws_security_group" "node_sg" {
-  count  = length(var.pri_sub_cidr_block) * 3
+  count  = length(var.pri_subnets_id) * 3
   vpc_id = var.vpc_id
   name   = "node-security-group-${count.index + 1}"
 
   ingress {
-    protocol  = "tcp"
-    from_port = 22
-    to_port   = 22
+    protocol        = "tcp"
+    from_port       = 22
+    to_port         = 22
+    security_groups = [element(aws_security_group.ansible_sg.*.id, count.index % length(var.pri_subnets_id))]
+
     # cidr_blocks = ["${var.bastion_cidr_block[count.index]}"]
     # security_groups = [element(aws_security_group.ansible_sg[count.index / 3].id)]
   }
+  ingress {
+    protocol        = "tcp"
+    from_port       = 22
+    to_port         = 22
+    security_groups = [element(aws_security_group.bastion_sg.*.id, count.index % length(var.pri_subnets_id))]
+
+    # cidr_blocks = ["${var.bastion_cidr_block[count.index]}"]
+    # security_groups = [element(aws_security_group.ansible_sg[count.index / 3].id)]
+  }
+
 
 
   egress {

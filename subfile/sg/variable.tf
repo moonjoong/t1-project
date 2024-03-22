@@ -3,7 +3,7 @@ variable "vpc_id" {
 }
 
 
-variable "pri_sub_cidr_block" {
+variable "pri_subnets_id" {
   type = list(string)
 }
 
