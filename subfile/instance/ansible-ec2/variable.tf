@@ -8,13 +8,16 @@ variable "instance_type" {
   default = "t3.micro"
 }
 
-variable "subnets_id" {
-  type    = list(string)
-  default = ["10.0.10.0/24", "10.0.30.0/24"]
+variable "pri_subnets_id" {
+  type = list(string)
+
 }
 
-variable "pri_sub_sg" {
+variable "ansible_ec2_sg" {
   type = list(string)
+}
+variable "node_ec2_sg" {
+  type = any
 }
 
 # variable "subnet_id" {

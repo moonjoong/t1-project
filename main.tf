@@ -25,14 +25,14 @@ module "internet" {
   source        = "./subfile/internet"
   num           = 2
   vpc_id        = module.vpc.vpc_id
-  pub_subnet_id = module.vpc.pub-sub-01-id
+  pub_subnet_id = module.vpc.pub_sub_id[0]
 
 }
 
 module "att" {
   source             = "./subfile/attachment"
-  pub_subnet_id      = module.vpc.pub-sub-01-id
-  pri_subnets_id     = [module.vpc.pri-dev-sub-01-id, module.vpc.pri-dev-sub-02-id, module.vpc.pri-db-sub-01-id]
+  pub_subnet_id      = module.vpc.pub_sub_id[0]
+  pri_subnets_id     = [module.vpc.pri_sub_id[0], module.vpc.pri_sub_id[1]]
   pub_route_table_id = module.internet.pub-route-table-id
   pri_route_table_id = module.internet.pri-route-table-id
   igw_id             = module.internet.igw-id
@@ -41,20 +41,21 @@ module "att" {
 module "sg" {
   source             = "./subfile/sg"
   vpc_id             = module.vpc.vpc_id
-  local_cidr_block   = "100.0.0.0/24"
-  pri_sub_cidr_block = [module.vpc.pri-dev-sub-01-id, module.vpc.pri-dev-sub-02-id]
+  local_cidr_block   = "61.85.118.29/32"
+  pri_sub_cidr_block = module.vpc.pri_sub_id[*]
 
 }
 
 module "bastion-ec2" {
   source     = "./subfile/instance/ec2"
-  subnet_id  = module.vpc.pub-sub-01-id
-  pub_sub_sg = [module.sg.bastion_sg_id_01, module.sg.bastion_sg_id_02]
+  subnet_id  = module.vpc.pub_sub_id[0]
+  pub_sub_sg = [module.sg.bastion_sg_id[0], module.sg.bastion_sg_id[1]]
 
 }
-module "pri-ansible-server" {
-  source     = "./subfile/instance/ansible-ec2"
-  subnets_id = [module.vpc.pri-dev-sub-01-id, module.vpc.pri-dev-sub-02-id]
-  pri_sub_sg = [module.sg.pri_sg_id_01, module.sg.pri_sg_id_02]
 
+module "pri-ansible-server" {
+  source         = "./subfile/instance/ansible-ec2"
+  pri_subnets_id = [module.vpc.pri_sub_id[0], module.vpc.pri_sub_id[1]]
+  ansible_ec2_sg = [module.sg.ansible_sg_id[0], module.sg.ansible_sg_id[1]]
+  node_ec2_sg    = [module.sg.node_sg_id[0], module.sg.node_sg_id[1]]
 }

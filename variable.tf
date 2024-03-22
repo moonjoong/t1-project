@@ -2,9 +2,7 @@ variable "region" {
   type    = string
   default = "ap-east-1"
 }
-variable "vpc_id" {
-  type = string
-}
+
 variable "cidr" {
   type = list(string)
   default = [

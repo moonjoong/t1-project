@@ -5,4 +5,7 @@ resource "aws_instance" "bastion_instance" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = toset([var.pub_sub_sg[count.index]])
   key_name               = "moonkey"
+  tags = {
+    Name = "bastion${count.index + 1}"
+  }
 }
