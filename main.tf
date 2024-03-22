@@ -50,7 +50,7 @@ module "sg" {
 module "bastion-ec2" {
   source     = "./subfile/instance/ec2"
   subnet_id  = module.vpc.pub_sub_id[0]
-  pub_sub_sg = [module.sg.bastion_sg_id[0], module.sg.bastion_sg_id[1]]
+  pub_sub_sg = module.sg.bastion_sg_id[*]
 
 }
 
