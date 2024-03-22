@@ -3,21 +3,25 @@ variable "region" {
   default = "ap-east-1"
 }
 
-variable "cidr" {
-  type = list(string)
-  default = [
-    "10.0.0.0/16", "10.0.1.0/24", "10.0.10.0/24", "10.0.30.0/24", "10.0.20.0/24"
+# variable "cidr" {
+#   type = list(string)
+#   default = [
+#     "10.0.0.0/16", "10.0.1.0/24", "10.0.10.0/24", "10.0.30.0/24", "10.0.20.0/24"
 
-  ]
+#   ]
 
-}
+# }
 
 variable "pub_cidr_sub" {
   type    = list(string)
   default = ["10.0.1.0/24"]
 }
 
-variable "pri_cidr_sub" {
+variable "pri_ec2_cidr_sub" {
   type    = list(string)
-  default = ["10.0.10.0/24", "10.0.30.0/24", "10.0.20.0/24"]
+  default = ["10.0.10.0/24", "10.0.30.0/24", "10.0.40.0/24"]
+}
+variable "pri_db_cidr_sub" {
+  type    = list(string)
+  default = ["10.0.20.0/24"]
 }

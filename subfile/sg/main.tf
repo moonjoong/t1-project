@@ -30,6 +30,8 @@ resource "aws_security_group" "ansible_sg" {
     protocol  = "tcp"
     from_port = 22
     to_port   = 22
+
+
     # cidr_blocks = ["${var.bastion_cidr_block[count.index]}"]
     security_groups = [aws_security_group.bastion_sg[count.index].id]
   }
