@@ -1,0 +1,9 @@
+region           = "ap-east-1"
+image_id         = "ami-02b668243e1aba105"
+instance_type    = "t3.micro"
+pub_cidr_sub     = ["10.0.1.0/24"]
+pri_ec2_cidr_sub = ["10.0.10.0/24", "10.0.30.0/24"]
+pri_db_cidr_sub  = ["10.0.20.0/24"]
+local_cidr_block = "61.85.118.29/32"
+pem_key          = "moonkey"
+num              = 2
