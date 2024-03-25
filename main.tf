@@ -19,15 +19,12 @@ module "vpc" {
   pri_db_cidr_sub  = var.pri_db_cidr_sub
   pub_cidr_sub     = var.pub_cidr_sub
   region           = var.region
-
 }
 
 module "internet" {
   source        = "./subfile/internet"
-  num           = 2
   vpc_id        = module.vpc.vpc_id
   pub_subnet_id = module.vpc.pub_sub_id[0]
-
 }
 
 module "att" {
@@ -42,9 +39,8 @@ module "att" {
 module "sg" {
   source           = "./subfile/sg"
   vpc_id           = module.vpc.vpc_id
-  local_cidr_block = "61.85.118.29/32"
+  local_cidr_block = var.local_cidr_block
   pri_subnets_id   = module.vpc.pri_ec2_sub_id[*]
-
 }
 
 module "bastion-ec2" {
@@ -52,10 +48,10 @@ module "bastion-ec2" {
   pub_subnet_id  = module.vpc.pub_sub_id[0]
   bastion_ec2_sg = module.sg.bastion_sg_id[*]
   pri_subnets_id = module.vpc.pri_ec2_sub_id[*]
-  keyname        = "moonkey"
-  image_id       = "ami-02b668243e1aba105"
-  instance_type  = "t3.micro"
-
+  keyname        = var.pem_key
+  image_id       = var.image_id
+  num            = var.num
+  instance_type  = var.instance_type
 }
 
 module "pri-ansible-server" {
@@ -63,8 +59,8 @@ module "pri-ansible-server" {
   pri_subnets_id = module.vpc.pri_ec2_sub_id[*]
   ansible_ec2_sg = module.sg.ansible_sg_id[*]
   node_ec2_sg    = module.sg.node_sg_id
-  keyname        = "moonkey"
-  image_id       = "ami-02b668243e1aba105"
-  instance_type  = "t3.micro"
+  keyname        = var.pem_key
+  image_id       = var.image_id
+  instance_type  = var.instance_type
 }
 

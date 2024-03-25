@@ -10,7 +10,6 @@ variable "instance_type" {
 
 variable "pri_subnets_id" {
   type = list(string)
-
 }
 
 variable "ansible_ec2_sg" {
@@ -23,7 +22,3 @@ variable "node_ec2_sg" {
 variable "keyname" {
   type = string
 }
-# variable "subnet_id" {
-#   type = string
-
-# }

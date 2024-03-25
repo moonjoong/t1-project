@@ -1,22 +1,17 @@
 variable "num" {
-  type    = number
-  default = 2
+  type = number
 }
 
 variable "image_id" {
   type = string
-
 }
 
 variable "instance_type" {
-  type    = string
-  default = "t3.micro"
+  type = string
 }
-
 
 variable "pub_subnet_id" {
   type = string
-
 }
 
 variable "bastion_ec2_sg" {

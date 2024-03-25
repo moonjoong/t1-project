@@ -18,8 +18,6 @@ resource "aws_route_table" "route_table" {
   }
 }
 
-
-
 resource "aws_eip" "nat_1" {
   domain = "vpc"
   lifecycle {
@@ -31,7 +29,6 @@ resource "aws_eip" "nat_1" {
 }
 
 resource "aws_nat_gateway" "nat_gateway_1" {
-
   allocation_id = aws_eip.nat_1.allocation_id
   subnet_id     = var.pub_subnet_id
   tags = {
